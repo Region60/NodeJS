@@ -1,0 +1,13 @@
+Модуль Path.
+
+const path = require('path')
+
+console.log(path.basename(__filename))   -   абсолютный путь до файла, пишем ф файле file значит __filename = file
+console.log(path.dirname(__filename))   -   название папки где лежит файл
+console.log(path.extname(__filename))   -   разрешение файла
+console.log(path.parse(__filename))   -   доступ к объекту со свойствами root, dir,base, ext, name
+
+console.log(path.join(__dirname,'../','file2'))   //генерирует путь
+ __dirname дерриктория где ведется разработка, ../ другая директория или название другой папки, file2 название файла
+
+console.log(path.resolve(__dirname,'../','file2')) если указывать абсолютный путь то будет выдавать уже кокретный реультат

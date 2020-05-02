@@ -1,0 +1,51 @@
+Модуль FS служит для того чтобы работать с модулями и папками FS - file system
+
+const fs = require('fs')
+const path = require('path')
+
+
+fs.mkdir  -создать файл асинхронно
+fs.mkdirSync создать файл сихронно, тоесть пока  файл создаеся выполненаие кода останавливается
+
+fs.mkdir(path.join(__dirname, 'notes'),(err)=>{ .. создаем папку notes
+if (err) throw new Error(err)    //если есть ощибка вывести ее, если нет, то вывести консоль
+console.log('папка была создана'
+})
+
+fs.writeFile(
+path.join(__dirname,'notes',mynotes.txt'), \\создаем файл
+'Hello World',                               \\ создаем запись в файле
+(err)={
+if(err) throw err
+console.log("файл был создан")                       \\ если мы два раза подряд выполним этот файл то ошибку не выдаст,
+                                                              а просто перезатрет результат
+}
+
+fs.appendFile(path.join(__dirname,'notes',mynotes.txt),
+'yoyoyyo',
+(err)={
+if(err) throw err
+console.log("файл был изменен")              // добавит запись yoyoyyo в файл без перезатирания
+}
+
+fs.readFile(
+   (path.join(__dirname,'notes',mynotes.txt),
+   (err,data)={
+   if(err) throw err
+   console.log(Buffer.from(data).toString())  приводим к строке значение из буфера
+   }
+ или
+ fs.readFile(
+ (path.join(__dirname,'notes',mynotes.txt),
+ utf8                       .. делаем тоже самое используя кодировку утф8
+ (err,data)={
+ if(err) throw err
+ console.log(data)
+ }
+
+ fs.rename(
+    (path.join(__dirname,'notes',mynotes.txt),
+    (path.join(__dirname,'notes',mynotes1.txt),   переименовываем файл, причем содержане остается старое
+    (err,data)={
+    if(err) throw err
+    console.log("файл переименован")
