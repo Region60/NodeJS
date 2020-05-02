@@ -1,0 +1,17 @@
+
+Позволяет определить какая используется операционаная система
+
+const os =require ('os')
+console.log(os.platform())            // win   //платформа
+
+console.log(os.arch())               //  x64   //Архитектура
+
+console.log(os.cpus())                // Информация о ПК
+
+console.log(os.freemem())               // сколько свободной памяти есть
+
+console.log(os.totalmem())              // сколько всего памяти есть
+
+console.log(os.homedir())               // какая корневая дирректория
+
+console.log(os.uptime())                 // сколько работает система (в милисекундах)
