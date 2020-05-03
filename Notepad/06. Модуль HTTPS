@@ -1,0 +1,18 @@
+ const http = require('http')
+
+ const server = http.createServer((req, res) => {           //создаем сервер req- запрос, res - ответ
+console.log(req.url)
+
+res.write('Hello from NodeJS')                            //используем метод write
+res.end()                                                  //закрываем использовани метода (обязательно)
+ })
+
+ server.listen(3000, ()=>{                                    // запускаем сервер 3000 - порт, второй параметр
+ console.log('server is runing')                                  функция кот. выполнится при зампуске сервера
+ })
+
+
+В package.json добавляем объект свойству "scripts" {"start":"node index.js", "dev": "nodemon index.js"}
+теерь мы можем запускать сервер командой npm run start
+npm run dev - сообщение от nodemon  что он смотрит за файлами из нашего проекта. Это позволяет автоматически перезапускать сервер при
+внесении изменений в исполняемый файл
