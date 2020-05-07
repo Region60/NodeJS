@@ -1,15 +1,34 @@
 const http = require('http')
-
+const fs = require('fs')
+const path = require('path')
 
 const server = http.createServer((req, res) => {
         if (req.method === 'GET') {
-            res.writeHead(200, {'Content-Type': 'text/html'})  //возвращает код 200 и устанавливает контент тайп "html"
-            res.end(`
-    <h1>Form</h1>
-<form method="post" action="/">
-<input name="title" type="text"/>
-<button type="submit">Send</button>
-</form>`)
+            res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})  //возвращает код 200 и устанавливает контент тайп "html"
+            if (req.url ==='/') {      //если reqest url равяется '/' то воспользуйся модулем фс чтение файла и указать путь через модуль path
+                fs.readFile(
+                    path.join(__dirname, 'views', 'index.html'),
+                    'utf-8',   // указываем кодировку чтобы получить определенный контент и делаем проверку на ошибки
+                    (err, content) => {
+                        if(err){
+                             throw err       //если ошибка выполняем throw
+                        }
+                        res.end(content)
+                    }
+                )
+            }else if (req.url === '/About') {     //если равняется '/about'
+                fs.readFile(
+                    path.join(__dirname, 'views', 'about.html'),
+                    'utf-8',
+                    (err, content) => {
+                        if(err){
+                            throw err
+                        }
+                        res.end(content)
+                    }
+                )
+
+            }
         } else if (req.method === 'POST') {
             const body = []
             res.writeHead(200, {
