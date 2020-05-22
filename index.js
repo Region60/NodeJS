@@ -28,6 +28,16 @@ const server = http.createServer((req, res) => {
                     }
                 )
 
+            }else  if (req.url === "/api/users"){
+                res.writeHead(200, {
+                    'Content-Type': 'text/json'
+                })
+
+                const users =[
+                    {name: 'Maksim', age: 33},
+                    {name: 'Alina', age: 28}
+                ]
+                res.end(JSON.stringify(users))  // преобразование объекта в JSON
             }
         } else if (req.method === 'POST') {
             const body = []
