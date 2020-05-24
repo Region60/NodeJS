@@ -12,6 +12,10 @@ app.engine('hbs',hbs.engine)                          //регистрируем
 app.set('view engine','hbs')                                // указываем какой движок будем использовать
 app.set('views','views')                                   // папка с шаблонами
 
+app.use(express.static('public')   )                                // регистрируем папку public
+
+
+
 app.get('/', (req,res)=>{
 res.render('index')
 })
