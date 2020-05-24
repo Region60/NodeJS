@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
                 )
             }else if (req.url === '/About') {     //если равняется '/about'
                 fs.readFile(
-                    path.join(__dirname, 'views', 'about.hbs'),
+                    path.join(__dirname, 'views', 'add.hbs'),
                     'utf-8',
                     (err, content) => {
                         if(err){

@@ -1,5 +1,8 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const homeRoutes = require('./routes/home')
+const addRoutes = require('./routes/add')
+const coursesRoutes = require('./routes/courses')
 
 const app = express()
 
@@ -13,15 +16,12 @@ app.set('view engine','hbs')                                // указывае�
 app.set('views','views')                                   // папка с шаблонами
 
 app.use(express.static('public')   )                                // регистрируем папку public
+app.use(express.urlencoded({extended: true}))                       //добавялем middleWire для обработки запросов POST
+app.use('/', homeRoutes)
+app.use('/add', addRoutes)
+app.use('/courses', coursesRoutes)
 
 
-
-app.get('/', (req,res)=>{
-res.render('index')
-})
-app.get('/about', (req,res)=>{
-    res.render('about')
-})
 
 const PORT = process.env.PORT || 3000
 
