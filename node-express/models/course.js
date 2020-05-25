@@ -21,7 +21,7 @@ class Course {
     }
 
     async save() {
-        const courses = await Course.getAll()                           // присваивает объект
+        const courses = await Course.getAll()                           // присваивает массив
         courses.push(this.toJSON())                                      // добавляет в конец объект из формы
 
         return new Promise((resolve, reject) => {
@@ -49,7 +49,7 @@ class Course {
                     if (err) {
                         reject(err)
                     } else {
-                        resolve(JSON.parse(content))                        //берет содержимое файла в объект
+                        resolve(JSON.parse(content))                        //берет содержимое файла в массив
                     }
                 }
             )
