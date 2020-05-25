@@ -21,13 +21,13 @@ class Course {
     }
 
     async save() {
-        const courses = await Course.getAll()
-        courses.push(this.toJSON())
+        const courses = await Course.getAll()                           // присваивает объект
+        courses.push(this.toJSON())                                      // добавляет в конец объект из формы
 
         return new Promise((resolve, reject) => {
             fs.writeFile(
-                path.join(__dirname, '..', 'data', 'courses.json'),
-                JSON.stringify(courses),
+                path.join(__dirname, '..', 'data', 'courses.json'),            // записывает изменненый
+                JSON.stringify(courses),                                          // объект в формате json
                 (err) => {
                     if (err) {
                         reject(err)
@@ -42,14 +42,14 @@ class Course {
 
     static getAll() {
         return new Promise((resolve, reject) => {
-            fs.readFile(
-                path.join(__dirname, '..', 'data', 'courses.json'),
+            fs.readFile(                                                          // читает файл courses.json
+                path.join(__dirname, '..', 'data', 'courses.json'),              //расположение файла
                 'utf-8',
                 (err, content) => {
                     if (err) {
                         reject(err)
                     } else {
-                        resolve(JSON.parse(content))
+                        resolve(JSON.parse(content))                        //берет содержимое файла в объект
                     }
                 }
             )
