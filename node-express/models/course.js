@@ -20,6 +20,28 @@ class Course {
         }
     }
 
+   static async update(course) {
+       const courses = await Course.getAll()
+
+       const idx = courses.findIndex(c=> c.id === course.id)
+       courses[idx] = course
+
+       return new Promise((resolve, reject) => {
+           fs.writeFile(
+               path.join(__dirname, '..', 'data', 'courses.json'),            // записывает изменненый
+               JSON.stringify(courses),                                          // объект в формате json
+               (err) => {
+                   if (err) {
+                       reject(err)
+                   } else {
+                       resolve()
+                   }
+               }
+           )
+       })
+
+   }
+
     async save() {
         const courses = await Course.getAll()                           // присваивает массив
         courses.push(this.toJSON())                                      // добавляет в конец объект из формы
@@ -55,6 +77,11 @@ class Course {
             )
         })
 
+    }
+
+    static async getById(id) {
+ const courses = await Course.getAll()
+        return courses.find(c=> c.id === id)
     }
 }
 

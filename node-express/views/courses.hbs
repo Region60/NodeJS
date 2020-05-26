@@ -1,7 +1,7 @@
 <h1>Новый курс</h1>
 
 {{#if courses.length}}
-    {{#each courses}}     //использывать для каждого элемента массива courses (как цикл)
+    {{#each courses}}
     <div class="row">
         <div class="col s6 offset-s3">
             <div class="card">
@@ -13,7 +13,8 @@
                     <p class="price">{{price}}</p>
                 </div>
                 <div class="card-action">
-                    <a href="/courses/{{id}}">Открыть курс</a>
+                    <a href="/courses/{{id}}" target ='_blank'>Открыть курс</a>
+                    <a href="/courses/{{id}}/edite?allow=true" target ='_blank'>Редактировать</a>
                 </div>
             </div>
         </div>
