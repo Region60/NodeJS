@@ -3,7 +3,7 @@ const Course = require('../models/course')
 const router = Router()
 
 router.get('/', async (req,res)=>{
-    const courses = await Course.getAll()
+    const courses = await Course.find()              //меняем с .getAll на .find
     res.render('courses', {
         title: 'Курсы',
         isCourses: true,
@@ -15,7 +15,7 @@ router.get('/:id/edite', async (req,res)=>{
     if (!req.query.allow) {
         return res.redirect('/')  //ставимм ретерн ,чтобы функция не выполнялась дальше
     }
-    const course = await Course.getById(req.params.id)
+    const course = await Course.findById(req.params.id)       //меняем с getById на findById
     res.render('course-edite', {
         title: `Редактировать ${course.title}`,
         course
@@ -23,14 +23,16 @@ router.get('/:id/edite', async (req,res)=>{
 })
 
 router.post('/edite', async (req,res)=>{
-    await  Course.update(req.body)
+    const {id} =req.body
+    delete req.body.id          //удаляем id
+    await  Course.findByIdAndUpdate(id, req.body)
     res.redirect('/courses')
 })
 
 
 
 router.get('/:id', async (req,res)=>{                       //для того чтобы обработать динамику путь указываем
-    const course = await Course.getById(req.params.id)      //через : // req.params.id адрес хранения id
+    const course = await Course.findById(req.params.id)      //через : // req.params.id адрес хранения id
     res.render('course', {
         layout: 'empty',                                // использовать лейаут empty
         title: `Курс ${course.title}`,
