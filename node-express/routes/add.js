@@ -11,9 +11,9 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     const course = new Course({
-        title: req.body.title,                  //указываем те поля, которые мы написади в Схеме
-        price: req.body.price,
-        img: req.body.img
+        title: req.body.title,
+        price:req.body.price,
+        img:req.body.img
     })
     try {
         await course.save()

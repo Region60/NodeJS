@@ -13,7 +13,7 @@ const $card = document.querySelector('#card')
 if ($card) {
     $card.addEventListener('click', event => {
         if (event.target.classList.contains('js-remove')) {              //проверяет если класс js-remove
-            const id = event.target.dataset.id                                  //получаем id
+            const id = event.target.dataset.id                                   //получаем id
 
             fetch('/card/remove/' + id, {
                 method: 'delete'
@@ -26,7 +26,7 @@ if ($card) {
                         $card.querySelector('tbody').innerHTML = html
                         $card.querySelector('.price').textContent = toCurrency(card.price)
                     } else {
-                        $card.innerHTML = '<p>Корзина пуста</p>'
+                        $card.innerHtml = '<p>Корзина пуста</p>'
                     }
                 })
         }
