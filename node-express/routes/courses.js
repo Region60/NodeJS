@@ -4,6 +4,8 @@ const router = Router()
 
 router.get('/', async (req, res) => {
     const courses = await Course.find()              //меняем с .getAll на .find
+        .populate('userId', 'email name')            //userId становится объектом со свойствами email, name
+        .select('price title img')                    //достает только те поля которые указали (price, title, img)
     res.render('courses', {
         title: 'Курсы',
         isCourses: true,

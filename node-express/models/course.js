@@ -9,7 +9,11 @@ const course = new Schema({
         type: Number,
         required:true
     },
-    img:String
+    img:String,
+    userId: {
+        type: Schema.Types.ObjectId,  //связка взять айди из Юзер
+        ref:'User'
+    }
     }
 )
 module.exports = model('Course', course)

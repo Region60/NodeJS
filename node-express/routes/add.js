@@ -13,8 +13,9 @@ router.post('/', async (req, res) => {
     const course = new Course({
         title: req.body.title,
         price:req.body.price,
-        img:req.body.img
-    })
+        img:req.body.img,
+        userId: req.user        //req.user._id тоже будет правильной записью. Но монгус и так поймет что пер
+    })                            //едается id, потому что используется метод .ObjectId
     try {
         await course.save()
         res.redirect('courses')
