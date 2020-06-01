@@ -34,6 +34,7 @@ class Card {
     }
 
     static async remove(id) {
+        debugger
         const card = await Card.fetch()
         const idx = card.courses.findIndex(c => c.id === id)
         const course = card.courses [idx]

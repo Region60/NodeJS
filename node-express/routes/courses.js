@@ -13,6 +13,7 @@ router.get('/', async (req,res)=>{
 
 router.get('/:id/edite', async (req,res)=>{
     if (!req.query.allow) {
+        alert (req.query.allow)
         return res.redirect('/')  //ставимм ретерн ,чтобы функция не выполнялась дальше
     }
     const course = await Course.findById(req.params.id)       //меняем с getById на findById
@@ -22,8 +23,8 @@ router.get('/:id/edite', async (req,res)=>{
     })
 })
 
-router.post('/edite', async (req,res)=>{
-    const {id} =req.body
+router.post('/edite', async (req, res)=>{
+    const {id} = req.body
     delete req.body.id          //удаляем id
     await  Course.findByIdAndUpdate(id, req.body)
     res.redirect('/courses')
