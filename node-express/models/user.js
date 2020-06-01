@@ -1,13 +1,13 @@
 const {Schema, model} = require('mongoose')
 
-const userSchema =new Schema ({
+const userSchema = new Schema({
     email: {
-        type:String,
+        type: String,
         required: true
     },
     name: {
         type: String,
-    required: true
+        required: true
     },
     cart: {
         items: [
@@ -25,7 +25,27 @@ const userSchema =new Schema ({
             }
         ]
     }
-
 })
 
-module.exports = model('User', userSchema )
+userSchema.methods.addToCart = function(course) {     //Создаем функцию через function чтобы работало this
+    console.log ("1111")
+    const items = [...this.cart.items]
+
+    const idx = items.findIndex(c => {
+        return c.courseId.toString() === course._id.toString() //проверяем есть ли курс  (toString обязательно)
+    })
+    if (idx >= 0) {       //  в корзине есть уже такой курс
+        items[idx].count = items[idx].count + 1      // если есть курс то увеличиваем количество на 1
+    } else {
+        items.push({           // добавляем курс с полями courseId, count
+            courseId: course._id,
+            count: 1
+        })
+    }
+    this.cart = {items}          //this.cart = {items: items}
+    return this.save()
+    /*const newCart = {items: cloneItems}
+    this.cart = newCart*/
+}
+
+module.exports = model('User', userSchema)
