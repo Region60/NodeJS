@@ -24,7 +24,7 @@ app.set('views', 'views')                                   // папка с ш�
 
 app.use(async(req,res, next) => {            //пишем собственный миддлвеер
     try {
-        const user = await User.findById('5ed51b7dd89ee9217ceab95c') //копируем id из базы с сайта mbd
+        const user = await User.findById('5ed6957481289c1164443283') //копируем id из базы с сайта mbd
         req.user = user
         next()           //чтобы продолжилось выполнение дальше
     }catch(e){
@@ -66,7 +66,7 @@ async function start() {
     }
 }
 
-start()
+start();
 
 const PORT = process.env.PORT || 3000
 

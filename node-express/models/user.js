@@ -28,7 +28,6 @@ const userSchema = new Schema({
 })
 
 userSchema.methods.addToCart = function(course) {     //Создаем функцию через function чтобы работало this
-    console.log ("1111")
     const items = [...this.cart.items]
 
     const idx = items.findIndex(c => {
