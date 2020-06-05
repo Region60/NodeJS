@@ -11,12 +11,13 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const user = req.user
+        const user =await req.user
             .populate('cart.items.coursedId')        //чтобы id курсов превратить в объекты
             .execPopulate()
         const courses = user.cart.items.map(i => ({
             count: i.count,
             course: {...i.courseId._doc}
+
         }))
 
         const order = new Order({
@@ -26,7 +27,8 @@ router.post('/', async (req, res) => {
             },
             courses: courses
         })
-        await order.save
+
+        await order.save()
         await req.user.clearCart()
 
         res.redirect('/orders')

@@ -21,8 +21,10 @@ const orderSchema = new Schema({
             required: true
         }
     },
-    date: Date,
-    default: Date
+    date: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 

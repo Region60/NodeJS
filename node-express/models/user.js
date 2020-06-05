@@ -58,8 +58,8 @@ userSchema.methods.removeFromCart = function (id) {
     }
 
     this.cart = {items}                                                                   //переопределяем массив
-    return this.save()
 
+    return this.save()
 }
 
 userSchema.methods.clearCart = function () {
