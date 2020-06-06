@@ -34,9 +34,10 @@ router.delete('/remove/:id', async (req, res) =>{
 })
 
 router.get('/', async (req, res) => {
-const user =await req.user              // берем юзера, потому что корзина является частью юзера ( у каждого юзера она своя)
+const user = await req.user              // берем юзера, потому что корзина является частью юзера ( у каждого юзера она своя)
     .populate('cart.items.courseId')
     .execPopulate()
+    console.log(user.cart.items)
     const courses = mapCartItems(user.cart)
     res.render('card', {
         title: 'Корзина',

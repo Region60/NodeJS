@@ -14,7 +14,6 @@ if ($card) {
     $card.addEventListener('click', event => {
         if (event.target.classList.contains('js-remove')) {              //проверяет если класс js-remove
             const id = event.target.dataset.id                                   //получаем id
-
             fetch('/card/remove/' + id, {
                 method: 'delete'
             }).then(res => res.json())                  //не можем использовать await тк работаем в браузере

@@ -50,7 +50,6 @@ userSchema.methods.addToCart = function (course) {     //Создаем функ
 userSchema.methods.removeFromCart = function (id) {
     let items = [...this.cart.items]                                                       //получаем массив элементов корзины
     const idx = items.findIndex(c => c.courseId.toString() === id.toString())      //получаем индекс элемента
-
     if (items[idx].count === 1) {                                                           //если кол-во элемента =1
         items = items.filter(c => c.courseId.toString() !== id.toString())              //переопределяем массив исключая из него элемент
     } else {
