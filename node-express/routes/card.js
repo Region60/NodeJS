@@ -4,7 +4,9 @@ const Course = require('../models/course')
 
 function mapCartItems(cart) {
     return cart.items.map(c=> ({
-        ...c.courseId._doc, id: c.courseId.id, count: c.count
+        ...c.courseId._doc,
+        id: c.courseId.id,
+        count: c.count
     }))
 }
 
@@ -30,6 +32,7 @@ router.delete('/remove/:id', async (req, res) =>{
         courses,
         price: computePrice(courses)
     }
+    console.log(cart)
     res.status(200).json(cart)
 })
 
@@ -37,7 +40,6 @@ router.get('/', async (req, res) => {
 const user = await req.user              // берем юзера, потому что корзина является частью юзера ( у каждого юзера она своя)
     .populate('cart.items.courseId')
     .execPopulate()
-    console.log(user.cart.items)
     const courses = mapCartItems(user.cart)
     res.render('card', {
         title: 'Корзина',

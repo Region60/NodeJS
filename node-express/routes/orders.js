@@ -3,23 +3,39 @@ const router = Router()
 const Order = require('../models/order')
 
 router.get('/', async (req, res) => {
-    res.render('orders', {
-        isOrder: true,
-        title: 'Заказы'
-    })
+    try {
+        const orders = await Order.find({
+          'user.userId': req.user._id  //условие, если 'user.userId' совпадает с req.user._id то это все наши заказы
+        }).populate('user.userId')
+        res.render('orders', {
+            isOrder: true,
+            title: 'Заказы',
+            orders: orders.map(o => {
+                return{
+                    ...o._doc,
+                    price: o.courses.reduce((total,c) => {
+                        return total += c.count * c.course.price
+                    },0)
+                }
+            })
+        })
+    }catch (e) {
+        console.log(e)
+    }
+
 })
 
 router.post('/', async (req, res) => {
     try {
         const user =await req.user
-            .populate('cart.items.coursedId')        //чтобы id курсов превратить в объекты
+            .populate('cart.items.courseId')        //чтобы id курсов превратить в объекты
             .execPopulate()
         const courses = user.cart.items.map(i => ({
             count: i.count,
             course: {...i.courseId._doc}
 
         }))
-
+console.log(user.cart.items.courseId)
         const order = new Order({
             user: {
                 name: req.user.name,

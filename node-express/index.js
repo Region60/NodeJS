@@ -1,5 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const session = require('express-session')
 const Handlebars = require('handlebars')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const mongoose = require('mongoose')
@@ -9,7 +10,9 @@ const addRoutes = require('./routes/add')
 const coursesRoutes = require('./routes/courses')
 const cardRoutes = require('./routes/card')
 const ordersRoutes = require('./routes/orders')
+const authRoutes = require('./routes/auth')
 const User = require('./models/user')   //подключаем компонент
+const varMiddleware = require('./middleware/variables')
 
 const app = express()
 
@@ -35,11 +38,18 @@ app.use(async(req,res, next) => {            //пишем собственный
 
 app.use(express.static(path.join(__dirname, 'public')))                                // регистрируем папку public
 app.use(express.urlencoded({extended: true}))                       //добавялем middleWire для обработки запросов POST
+app.use(session({
+    secret: 'some secret value',
+    resave: false,
+    saveUninitialized:false
+}))
+app.use(varMiddleware)
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/courses', coursesRoutes)
 app.use('/card', cardRoutes)
 app.use('/orders', ordersRoutes)
+app.use('/auth', authRoutes)
 
 
 async function start() {
