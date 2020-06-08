@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+const MongoStore = require('connect-mongodb-session')(session) //с боль-й буквы, название класса, после session
 const Handlebars = require('handlebars')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const mongoose = require('mongoose')
@@ -14,6 +15,9 @@ const authRoutes = require('./routes/auth')
 const User = require('./models/user')   //подключаем компонент
 const varMiddleware = require('./middleware/variables')
 
+const MONGODB_URI = 'mongodb+srv://maksim:8u2upvDe0W1dp945@cluster0-mjkka.mongodb.net/shop'
+
+
 const app = express()
 
 const hbs = exphbs.create({                                //создаем движок
@@ -22,10 +26,18 @@ const hbs = exphbs.create({                                //создаем дв
     handlebars: allowInsecurePrototypeAccess(Handlebars)
 })
 
+const store = new MongoStore({
+    collection:'session',
+    uri: MONGODB_URI,
+
+
+})
+
 app.engine('hbs', hbs.engine)                          //регистрируем в экспрессе движок
 app.set('view engine', 'hbs')                                // указываем какой движок будем использовать
 app.set('views', 'views')                                   // папка с шаблонами
 
+/*
 app.use(async(req,res, next) => {            //пишем собственный миддлвеер
     try {
         const user = await User.findById('5edabb16d65e480840856f1c') //копируем id из базы с сайта mbd
@@ -35,12 +47,14 @@ app.use(async(req,res, next) => {            //пишем собственный
         console.log(e)
     }
 })
+*/
 
 app.use(express.static(path.join(__dirname, 'public')))                                // регистрируем папку public
 app.use(express.urlencoded({extended: true}))                       //добавялем middleWire для обработки запросов POST
 app.use(session({
     secret: 'some secret value',
     resave: false,
+    store,
     saveUninitialized:false
 }))
 app.use(varMiddleware)
@@ -54,14 +68,13 @@ app.use('/auth', authRoutes)
 
 async function start() {
     try {
-        const url = 'mongodb+srv://maksim:8u2upvDe0W1dp945@cluster0-mjkka.mongodb.net/shop'
-        await mongoose.connect(url, {
+        await mongoose.connect(MONGODB_URI, {
             useNewUrlParser: true,
             useFindAndModify: false,
             useUnifiedTopology:true
         })
 
-        const candidate = await User.findOne() //если в базе есть пользователь то что-то вернет (это промис)
+        /*const candidate = await User.findOne() //если в базе есть пользователь то что-то вернет (это промис)
         if(!candidate) {                        //если пользователя нет, создадим его
             const user = new User({
                 email: '_max_kot@mail.ru',
@@ -69,7 +82,7 @@ async function start() {
                 cart: {items:[]}
             })
             await user.save()    //сохраяем пользователя
-        }
+        }*/
         app.listen(PORT, () => {
             console.log(`server is running ${PORT}`)
         })
