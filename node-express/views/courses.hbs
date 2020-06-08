@@ -14,7 +14,7 @@
                     </div>
                     <div class="card-action actions">
                         <a href="/courses/{{id}}" target='_blank'>Открыть курс</a>
-                        {{#if is @root.Auth}}      <!--выходим из цикла на дерективу выше-->
+                        {{#if @root.isAuth}}      <!--выходим из цикла на дерективу выше-->
                             <a href="/courses/{{id}}/edite?allow=true">Редактировать</a>
                         <form action="/card/add" method="POST">
                             <input type="hidden" name="id" value="{{id}}">
