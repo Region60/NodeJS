@@ -14,6 +14,7 @@ const ordersRoutes = require('./routes/orders')
 const authRoutes = require('./routes/auth')
 const User = require('./models/user')   //подключаем компонент
 const varMiddleware = require('./middleware/variables')
+const userMiddleware = require('./middleware/user')
 
 const MONGODB_URI = 'mongodb+srv://maksim:8u2upvDe0W1dp945@cluster0-mjkka.mongodb.net/shop'
 
@@ -58,6 +59,7 @@ app.use(session({
     saveUninitialized:false
 }))
 app.use(varMiddleware)
+app.use(userMiddleware)
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/courses', coursesRoutes)
