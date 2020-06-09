@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
     try {
         const {email, password, repeat, name} = req.body
-        const candidate = await User.findOne ({email})
+        const candidate = await User.findOne({email})
 
         if (candidate) {
             res.redirect('/auth/login#register')
