@@ -36,8 +36,9 @@ router.post('/register', async (req, res) => {
             res.redirect('/auth/login#register')
         } else {
             const user = new User({
-                email,name,password, cart: {items:[]}
+                email,password,name, cart: {items:[]}
             })
+            console.log(user)
             await user.save()
             res.redirect('/auth/login#login')
         }
