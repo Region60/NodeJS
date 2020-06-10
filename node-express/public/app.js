@@ -29,12 +29,14 @@ if ($card) {
     $card.addEventListener('click', event => {
         if (event.target.classList.contains('js-remove')) {              //проверяет если класс js-remove
             const id = event.target.dataset.id                                   //получаем id
+            const csrf = event.target.dataset.csrf        //забираем значение из фронта
             fetch('/card/remove/' + id, {
-                method: 'delete'
+                method: 'delete',
+                headers: {
+                    'X-XSRF-TOKEN': csrf
+                }
             }).then(res => res.json())                  //не можем использовать await тк работаем в браузере
                 .then(card => {                         // получаем объект card
-                    console.log(card.courses.length)
-
                     if (card.courses.length) {
                         const html = card.courses.map(c => {
                             return `<tr>

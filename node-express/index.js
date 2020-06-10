@@ -5,6 +5,7 @@ const MongoStore = require('connect-mongodb-session')(session) //с боль-й 
 const Handlebars = require('handlebars')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const mongoose = require('mongoose')
+const csrf = require('csurf ')
 const path = require('path')
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
@@ -37,7 +38,6 @@ const store = new MongoStore({
 app.engine('hbs', hbs.engine)                          //регистрируем в экспрессе движок
 app.set('view engine', 'hbs')                                // указываем какой движок будем использовать
 app.set('views', 'views')                                   // папка с шаблонами
-
 /*
 app.use(async(req,res, next) => {            //пишем собственный миддлвеер
     try {
@@ -49,7 +49,6 @@ app.use(async(req,res, next) => {            //пишем собственный
     }
 })
 */
-
 app.use(express.static(path.join(__dirname, 'public')))                                // регистрируем папку public
 app.use(express.urlencoded({extended: true}))                       //добавялем middleWire для обработки запросов POST
 app.use(session({
@@ -58,6 +57,7 @@ app.use(session({
     store,
     saveUninitialized:false
 }))
+app.use(csrf())
 app.use(varMiddleware)
 app.use(userMiddleware)
 app.use('/', homeRoutes)
