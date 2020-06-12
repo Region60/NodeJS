@@ -13,11 +13,14 @@
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.3.2",
     "csurf": "^1.11.0",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
+    "helmet": "^3.23.0",
     "mongoose": "^5.9.16",
     "uuid": "^8.1.0"
   },

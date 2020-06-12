@@ -5,7 +5,10 @@ const MongoStore = require('connect-mongodb-session')(session) //с боль-й 
 const Handlebars = require('handlebars')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const mongoose = require('mongoose')
-const csrf = require('csurf ')
+const helmet = require('helmet')
+const compression = require('compression')
+const csrf = require('csurf')
+const flash = require('connect-flash')
 const path = require('path')
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
@@ -16,8 +19,8 @@ const authRoutes = require('./routes/auth')
 const User = require('./models/user')   //подключаем компонент
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
+const keys = require('./keys/')
 
-const MONGODB_URI = 'mongodb+srv://maksim:8u2upvDe0W1dp945@cluster0-mjkka.mongodb.net/shop'
 
 
 const app = express()
@@ -30,7 +33,7 @@ const hbs = exphbs.create({                                //создаем дв
 
 const store = new MongoStore({
     collection:'session',
-    uri: MONGODB_URI,
+    uri: keys.MONGODB_URI,
 
 
 })
@@ -52,12 +55,15 @@ app.use(async(req,res, next) => {            //пишем собственный
 app.use(express.static(path.join(__dirname, 'public')))                                // регистрируем папку public
 app.use(express.urlencoded({extended: true}))                       //добавялем middleWire для обработки запросов POST
 app.use(session({
-    secret: 'some secret value',
+    secret: keys.SESION_SECRET,
     resave: false,
     store,
     saveUninitialized:false
 }))
 app.use(csrf())
+app.use(flash())
+app.use(helmet())
+app.use(compression())
 app.use(varMiddleware)
 app.use(userMiddleware)
 app.use('/', homeRoutes)
@@ -70,7 +76,7 @@ app.use('/auth', authRoutes)
 
 async function start() {
     try {
-        await mongoose.connect(MONGODB_URI, {
+        await mongoose.connect(keys.MONGODB_URI, {
             useNewUrlParser: true,
             useFindAndModify: false,
             useUnifiedTopology:true
