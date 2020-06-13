@@ -1,3 +1,5 @@
 
 В корне приложения создаем папку keys  и вней файл index.js
 Переносим из корневого файла index.js переменную MONGODB_URI и свойство secret в созданный компонент
+Регистрируемся, на send grid и копируем ключ к в приложение
+Устанавливаем пакеты nodemailer и nodemailer-sendgrid-transport. и подключаем их в routes/auth.js
