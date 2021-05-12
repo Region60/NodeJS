@@ -22,7 +22,7 @@
     "express-session": "^1.17.1",
     "helmet": "^3.23.0",
     "mongoose": "^5.9.16",
-    "nodemailer": "^6.4.8",
+    "nodemailer": "^6.4.16",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "uuid": "^8.1.0"
   },
